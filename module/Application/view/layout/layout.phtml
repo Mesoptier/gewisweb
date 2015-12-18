@@ -80,7 +80,20 @@ function getIsActiveClass($view, array $condition)
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <?php if (null === $this->identity()): ?>
-                            <li><a href="<?= $this->url('user') ?>"><?= $this->translate('Login') ?></a></li>
+                            <li class="dropdown">
+                                <a href="<?= $this->url('user') ?>" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= $this->translate('Login') ?></a>
+                                <div class="dropdown-menu dropdown-login">
+                                    <form action="#" method="post">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Lidnummer of email adres">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control" placeholder="Wachtwoord">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-block">Login</button>
+                                    </form>
+                                </div>
+                            </li>
                         <?php else: ?>
                             <li class="hidden-sm <?= getIsActiveClass($this, ['decision']) ?>"><a href="#"><?= $this->translate('Members') ?></a></li>
                             <?php $member = $this->identity()->getMember() ?>
@@ -104,36 +117,61 @@ function getIsActiveClass($view, array $condition)
         </nav>
 
         <?php if (isActive($this, ['frontpage', 'frontpage', 'home'])): ?>
-        <div class="jumbotron" style="background-image: url(<?= $this->basePath() ?>/img/Panorama.jpg);">
-            <div class="container">
-                <h1>Studievereniging GEWIS</h1>
-                <h2>Welkom op de website van Studievereniging GEWIS.</h2>
+            <div class="jumbotron" style="background-image: url(<?= $this->basePath() ?>/img/Panorama.jpg);">
+                <div class="container">
+                    <h1>Studievereniging GEWIS</h1>
+                    <h2>Welkom op de website van Studievereniging GEWIS.</h2>
+                </div>
             </div>
-        </div>
         <?php endif; ?>
 
         <div class="container">
             <?php echo $this->content; ?>
-            <hr>
-            <footer class="row">
-                <div class="col-md-2 col-sm-4">
-                    <img src="<?= $this->basePath() ?>/img/logo-white.png" />
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-2 col-md-1">
+                        <img src="<?= $this->basePath() ?>/img/logo-footer.png"/>
+                    </div>
+                    <div class="col-sm-10 col-md-7">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <p>&copy; 2013
+                                    - <?php echo date('Y') ?> <?= $this->translate("by WebCommissie GEWIS.") ?> <?php echo $this->translate('All rights reserved.') ?></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h3>Bezoekadres</h3>
+                                <address>
+                                    Studievereniging GEWIS<br>
+                                    MF 3.155<br>
+                                    De Groene Loper 5<br>
+                                    5612 AZ Eindhoven<br>
+                                    Nederland
+                                </address>
+                            </div>
+                            <div class="col-sm-4">
+                                <h3>Postadres</h3>
+                                <address>
+                                    Studievereniging GEWIS<br>
+                                    MF 3.155<br>
+                                    Postbus 513<br>
+                                    5600 MB Eindhoven<br>
+                                    Nederland
+                                </address>
+                            </div>
+                            <div class="col-sm-4">
+                                <i class="glyphicon glyphicon-earphone"></i> <a href="tel:+31402472815">+31 (0)40 247 2815</a><br>
+                                <i class="glyphicon glyphicon-envelope"></i> <a href="mailto:bestuur@gewis.nl">bestuur@gewis.nl</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-4 col-sm-8">
-                    <h3>Studievereniging GEWIS</h3>
-                    <address>
-                        MF 3.155<br>
-                        De Groene Loper 5<br>
-                        5612AZ Eindhoven<br>
-                        <a href="tel:+31402472815">+31 (0)40 247 2815</a><br>
-                        <a href="mailto:bestuur@gewis.nl">bestuur@gewis.nl</a>
-                    </address>
-                </div>
-                <div class="col-md-6 col-sm-12">
-                    <p>&copy; 2013 - <?php echo date('Y') ?> <?= $this->translate("by WebCommissie GEWIS.") ?> <?php echo $this->translate('All rights reserved.') ?></p>
-                </div>
-            </footer>
-        </div> <!-- /container -->
+            </div>
+        </footer>
         <?php echo $this->inlineScript() ?>
         <script>
             <?php foreach($this->scriptUrl()->getUrls() as $name => $url): ?>
